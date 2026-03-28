@@ -1,4 +1,3 @@
 package com.thelivan.tlang.ast;
 
-public class Element {
-}
+public class Element { }
