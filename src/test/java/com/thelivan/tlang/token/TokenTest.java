@@ -18,7 +18,7 @@ class TokenTest {
     while (true) {
       var token = lexer.next();
       System.out.println(token);
-      if (token.getTokenKind() == TokenKind.EOF) {
+      if (token.tokenKind() == TokenKind.EOF) {
         break;
       }
     }
