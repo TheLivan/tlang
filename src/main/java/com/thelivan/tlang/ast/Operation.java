@@ -3,17 +3,17 @@ package com.thelivan.tlang.ast;
 import com.thelivan.tlang.parser.lexer.token.TokenKind;
 
 public enum Operation {
-  UNARY_NEGATIVE,
-  UNARY_POSITIVE,
-  ADDITION,
-  SUBSTRACTION,
-  MULTIPLICATION,
-  DIVISION;
+  U_POS,
+  U_NEG,
+  ADD,
+  SUB,
+  MUL,
+  DIV;
 
   public static Operation fromToken(TokenKind kind) {
     return switch (kind) {
-      case PLUS -> UNARY_POSITIVE;
-      case MINUS -> UNARY_NEGATIVE;
+      case PLUS -> U_POS;
+      case MINUS -> U_NEG;
       default -> throw new IllegalArgumentException("not unary");
     };
   }
