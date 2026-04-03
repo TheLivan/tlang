@@ -36,13 +36,13 @@ public class Parser {
     Expression left = mul_expr();
     while (true) {
       var next = lexer.peek();
-      var kind = next.getTokenKind();
+      var kind = next.tokenKind();
       if (kind != PLUS && kind != MINUS) {
         break;
       }
 
       lexer.next();
-      return new Binary(left, mul_expr(), Operation.ADDITION);
+      return new Binary(left, mul_expr(), Operation.ADD);
     }
     return left;
   }
@@ -51,37 +51,37 @@ public class Parser {
     Expression left = unary();
     while (true) {
       var next = lexer.peek();
-      var kind = next.getTokenKind();
+      var kind = next.tokenKind();
       if (kind != ASTERISK && kind != SLASH) {
         return left;
       }
 
       lexer.next();
-      return new Binary(left, unary(), Operation.MULTIPLICATION);
+      return new Binary(left, unary(), Operation.MUL);
     }
   }
 
   Expression unary() {
     var next = lexer.peek();
-    var kind = next.getTokenKind();
+    var kind = next.tokenKind();
     if (kind != PLUS && kind != MINUS) {
       return primary();
     }
 
     lexer.next();
-    return new Unary(Operation.fromToken(next.getTokenKind()), primary());
+    return new Unary(Operation.fromToken(next.tokenKind()), primary());
   }
 
   Expression primary() {
     var next = lexer.peek();
-    var kind = next.getTokenKind();
+    var kind = next.tokenKind();
 
     if (kind == PAREN_OPEN) {
       return paren();
     } else if (kind == NUMBER) {
       return literal();
     } else {
-      System.out.println("error in primary-expr " + next.getValue());
+      System.out.println("error in primary-expr " + next.value());
     }
     return null;
   }
@@ -90,8 +90,8 @@ public class Parser {
     lexer.next();
     Expression exp = expr();
     var closeParen = lexer.next();
-    if (closeParen.getTokenKind() != PAREN_CLOSE) {
-      System.out.println("error in paren-expr: " + closeParen.getValue());
+    if (closeParen.tokenKind() != PAREN_CLOSE) {
+      System.out.println("error in paren-expr: " + closeParen.value());
     } else {
       return new Paren(exp);
     }
