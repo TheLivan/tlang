@@ -8,13 +8,11 @@ import com.thelivan.tlang.ast.Expression;
 import com.thelivan.tlang.ast.Literal;
 import com.thelivan.tlang.ast.Operation;
 import com.thelivan.tlang.ast.Paren;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class ParserTest {
 
   @Test
-  @Disabled
   void simpleTwoLiterals() {
     Parser parser = new Parser();
     parser.of("(7 + 6) * (42 + 56)");
@@ -48,18 +46,18 @@ public class ParserTest {
     assertInstanceOf(Binary.class, expr);
     Binary binary = (Binary) expr;
 
-    assertInstanceOf(Literal.class, binary.getLeft());
-    assertInstanceOf(Binary.class, binary.getRight());
+    assertInstanceOf(Binary.class, binary.getLeft());
+    assertInstanceOf(Literal.class, binary.getRight());
     assertSame(Operation.DIV, binary.getOperation());
 
-    Binary right = (Binary) binary.getRight();
-    assertSame(Operation.DIV, right.getOperation());
-    assertInstanceOf(Literal.class, right.getLeft());
-    assertInstanceOf(Binary.class, right.getRight());
+    Binary left = (Binary) binary.getLeft();
+    assertSame(Operation.DIV, left.getOperation());
+    assertInstanceOf(Binary.class, left.getLeft());
+    assertInstanceOf(Literal.class, left.getRight());
 
-    Binary rightRight = (Binary) right.getRight();
-    assertSame(Operation.DIV, rightRight.getOperation());
-    assertInstanceOf(Literal.class, rightRight.getLeft());
-    assertInstanceOf(Literal.class, rightRight.getRight());
+    Binary leftLeft = (Binary) left.getLeft();
+    assertSame(Operation.DIV, leftLeft.getOperation());
+    assertInstanceOf(Literal.class, leftLeft.getLeft());
+    assertInstanceOf(Literal.class, leftLeft.getRight());
   }
 }
