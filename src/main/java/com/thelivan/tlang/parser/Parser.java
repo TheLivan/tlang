@@ -42,7 +42,7 @@ public class Parser {
       }
 
       lexer.next();
-      return new Binary(left, mulExpression(), Operation.ADD);
+      left = new Binary(left, mulExpression(), Operation.fromToken(kind));
     }
     return left;
   }
@@ -53,12 +53,13 @@ public class Parser {
       var next = lexer.peek();
       var kind = next.tokenKind();
       if (kind != ASTERISK && kind != SLASH) {
-        return left;
+        break;
       }
 
       lexer.next();
-      return new Binary(left, unary(), Operation.MUL);
+      left = new Binary(left, unary(), Operation.fromToken(kind));
     }
+    return left;
   }
 
   Expression unary() {
@@ -69,7 +70,7 @@ public class Parser {
     }
 
     lexer.next();
-    return new Unary(Operation.fromToken(next.tokenKind()), primary());
+    return new Unary(Operation.fromTokenUnary(next.tokenKind()), primary());
   }
 
   Expression primary() {
