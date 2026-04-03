@@ -25,15 +25,15 @@ public class Parser {
   }
 
   Expression program() {
-    return expr();
+    return expression();
   }
 
-  Expression expr() {
-    return add_expr();
+  Expression expression() {
+    return addExpression();
   }
 
-  Expression add_expr() {
-    Expression left = mul_expr();
+  Expression addExpression() {
+    Expression left = mulExpression();
     while (true) {
       var next = lexer.peek();
       var kind = next.tokenKind();
@@ -42,12 +42,12 @@ public class Parser {
       }
 
       lexer.next();
-      return new Binary(left, mul_expr(), Operation.ADD);
+      return new Binary(left, mulExpression(), Operation.ADD);
     }
     return left;
   }
 
-  Expression mul_expr() {
+  Expression mulExpression() {
     Expression left = unary();
     while (true) {
       var next = lexer.peek();
@@ -88,7 +88,7 @@ public class Parser {
 
   Expression paren() {
     lexer.next();
-    Expression exp = expr();
+    Expression exp = expression();
     var closeParen = lexer.next();
     if (closeParen.tokenKind() != PAREN_CLOSE) {
       System.out.println("error in paren-expr: " + closeParen.value());
